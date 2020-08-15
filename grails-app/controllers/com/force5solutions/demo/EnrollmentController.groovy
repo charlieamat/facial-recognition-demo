@@ -8,18 +8,25 @@ class EnrollmentController {
     static String license = "AigFBWMDQcjyOOoVmuwrByOoZF5CZ7rHROzL372Le7Pwi50U+VpkFcHDp3t/VEAnVqalc9mYqK/k/5CzlqvxBR8vnuUDfBdNExTOal7kmS3MWfXrL+7qedbMqpz4qTcKooxKwmdFSB6Xa5tWp4613SNOt47BmYvSfLH6IIoxLMU="
 
     def index() {
+        [people: Person.list()]
     }
 
     def enroll() {
-        def faceImage = params.faceImage as CommonsMultipartFile
+        def person = Person.findById(params.long('personId'))
+        if (person == null) {
+            log.error("The facial enrollment form was submitted without a valid person selected.")
+            render view: 'index', model: [statusMessage: "The facial enrollment form was submitted without a valid person selected."]
+            return
+        }
 
+        def faceImage = params.faceImage as CommonsMultipartFile
         if (faceImage == null) {
             log.error("The facial enrollment form was submitted without a file.")
             render view: 'index', model: [statusMessage: "The facial enrollment form was submitted without a file."]
             return
         }
 
-        log.debug("Enrolling a facial identifier for <IDENTITY>.")
+        log.debug("Enrolling a facial identifier for $person.fullName.")
 
         log.debug("Activating FSDK library.")
 
@@ -65,11 +72,13 @@ class EnrollmentController {
 
         log.debug("Successfully created a face template from the image.")
 
-        new FacialIdentifier(template: faceTemplate.template).save()
+        def facialIdentifier = new FacialIdentifier(template: faceTemplate.template).save()
+        person.facialIdentifier = facialIdentifier
+        person.save()
 
         FSDK.finalize()
 
         log.debug("Successfully finalized the FSDK library.")
-        render view: 'index', model: [statusMessage: "Successfully enrolled a facial identifier for <IDENTITY>."]
+        render view: 'index', model: [statusMessage: "Successfully enrolled a facial identifier for $person.fullName."]
     }
 }
