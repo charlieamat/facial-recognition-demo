@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/facial-recognition-demo.iml" filepath="$PROJECT_DIR$/facial-recognition-demo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/facial-recognition-demo-grailsPlugins.iml" filepath="$PROJECT_DIR$/facial-recognition-demo-grailsPlugins.iml" />
+    </modules>
+  </component>
+</project>
