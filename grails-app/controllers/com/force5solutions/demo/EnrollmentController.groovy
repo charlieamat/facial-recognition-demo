@@ -15,6 +15,7 @@ class EnrollmentController {
 
         if (faceImage == null) {
             log.error("The facial enrollment form was submitted without a file.")
+            render view: 'index', model: [statusMessage: "The facial enrollment form was submitted without a file."]
             return
         }
 
@@ -26,6 +27,7 @@ class EnrollmentController {
 
         if (activationStatus != FSDK.FSDKE_OK) {
             log.warn("There was an error activating the FSDK library.")
+            render view: 'index', model: [statusMessage: "There was an error activating the FSDK library."]
             return
         }
 
@@ -35,6 +37,7 @@ class EnrollmentController {
 
         if (initializationStatus != FSDK.FSDKE_OK) {
             log.warn("There was an error initializing the FSDK library.")
+            render view: 'index', model: [statusMessage: "There was an error initializing the FSDK library."]
             return
         }
 
@@ -45,6 +48,7 @@ class EnrollmentController {
 
         if (loadStatus != FSDK.FSDKE_OK) {
             log.warn("There was an error loading an image from the JPEG buffer.")
+            render view: 'index', model: [statusMessage: "There was an error loading an image from the JPEG buffer."]
             return
         }
 
@@ -55,6 +59,7 @@ class EnrollmentController {
 
         if (faceTemplateStatus != FSDK.FSDKE_OK) {
             log.warn("There was an error creating a face template from the image.")
+            render view: 'index', model: [statusMessage: "There was an error creating a face template from the image."]
             return
         }
 
@@ -65,6 +70,6 @@ class EnrollmentController {
         FSDK.finalize()
 
         log.debug("Successfully finalized the FSDK library.")
+        render view: 'index', model: [statusMessage: "Successfully enrolled a facial identifier for <IDENTITY>."]
     }
-
 }

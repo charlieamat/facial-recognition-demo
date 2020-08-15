@@ -10,5 +10,8 @@
     <input type="file" name="faceImage"/>
     <g:submitButton name="Submit"/>
 </g:uploadForm>
+<g:if test="${statusMessage}">
+    <p>${statusMessage}</p>
+</g:if>
 </body>
 </html>
