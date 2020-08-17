@@ -5,7 +5,6 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile
 
 class EnrollmentController {
 
-    static String license = "AigFBWMDQcjyOOoVmuwrByOoZF5CZ7rHROzL372Le7Pwi50U+VpkFcHDp3t/VEAnVqalc9mYqK/k/5CzlqvxBR8vnuUDfBdNExTOal7kmS3MWfXrL+7qedbMqpz4qTcKooxKwmdFSB6Xa5tWp4613SNOt47BmYvSfLH6IIoxLMU="
 
     def index() {
         [people: Person.list()]
@@ -28,27 +27,6 @@ class EnrollmentController {
 
         log.debug("Enrolling a facial identifier for $person.fullName.")
 
-        log.debug("Activating FSDK library.")
-
-        def activationStatus = FSDK.ActivateLibrary(license)
-
-        if (activationStatus != FSDK.FSDKE_OK) {
-            log.warn("There was an error activating the FSDK library.")
-            render view: 'index', model: [statusMessage: "There was an error activating the FSDK library."]
-            return
-        }
-
-        log.debug("Successfully activated the FSDK library.")
-
-        def initializationStatus = FSDK.Initialize()
-
-        if (initializationStatus != FSDK.FSDKE_OK) {
-            log.warn("There was an error initializing the FSDK library.")
-            render view: 'index', model: [statusMessage: "There was an error initializing the FSDK library."]
-            return
-        }
-
-        log.debug("Successfully initialized the FSDK library.")
 
         def hImage = new FSDK.HImage()
         def loadStatus = FSDK.LoadImageFromJpegBuffer(hImage, faceImage.bytes, faceImage.bytes.size())
@@ -76,9 +54,6 @@ class EnrollmentController {
         person.facialIdentifier = facialIdentifier
         person.save()
 
-        FSDK.finalize()
-
-        log.debug("Successfully finalized the FSDK library.")
         render view: 'index', model: [statusMessage: "Successfully enrolled a facial identifier for $person.fullName."]
     }
 }
