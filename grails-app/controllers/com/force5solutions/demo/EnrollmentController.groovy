@@ -6,9 +6,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile
 class EnrollmentController {
 
 
-    def index() {
-        [people: Person.list()]
-    }
+    def index() {}
 
     def enroll() {
         def person = Person.findById(params.long('personId'))
@@ -26,7 +24,6 @@ class EnrollmentController {
         }
 
         log.debug("Enrolling a facial identifier for $person.fullName.")
-
 
         def hImage = new FSDK.HImage()
         def loadStatus = FSDK.LoadImageFromJpegBuffer(hImage, faceImage.bytes, faceImage.bytes.size())
@@ -50,9 +47,9 @@ class EnrollmentController {
 
         log.debug("Successfully created a face template from the image.")
 
-        def facialIdentifier = new FacialIdentifier(template: faceTemplate.template).save()
+        def facialIdentifier = new FacialIdentifier(template: faceTemplate.template).save(flush: true, failOnError: true)
         person.facialIdentifier = facialIdentifier
-        person.save()
+        person.save(flush: true, failOnError: true)
 
         render view: 'index', model: [statusMessage: "Successfully enrolled a facial identifier for $person.fullName."]
     }
