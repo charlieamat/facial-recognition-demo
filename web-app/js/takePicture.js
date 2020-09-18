@@ -43,13 +43,11 @@ if (navigator.mediaDevices.getUserMedia) {
 
 function snapshot(inPortrait, pWidth, pHeight) {
     if (video.srcObject) {
-        var sx = inPortrait ? 0 : 82;
-        var sy = inPortrait ? 82: 0;
-        ctx.drawImage(video, sx, sy, 470, 470, 0, 0, canvas.width, canvas.height);
-        identityImage = canvas.toDataURL('image/png');
+        ctx.drawImage(video, 0, 0, 1920, 1080, 0, 0, 1920/3, 1080/3);
 
-        $('img#identityImage').attr('src', identityImage);
-        identityImage = identityImage.replace('data:image/png;base64,', '');
+        identityImage = canvas.toDataURL('image/jpeg');
+        identityImage = identityImage.replace('data:image/jpeg;base64,', '');
+
         constant = 0;
     }
 }

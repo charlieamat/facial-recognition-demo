@@ -2,7 +2,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://github.com/justadudewhohacks/face-api.js/raw/master/dist/face-api.js"></script>
 
-<canvas id="identityImage" />
+<canvas id="identityImage" style="width: 1920px; height: 1080px;" />
 
 <g:form name="enrollForm" action="save" params="${params}" method="post">
     <div class="row">
@@ -10,7 +10,7 @@
             <h1 id="countdown" style="display: none;"></h1>
 
             <div class="video-crop">
-                <video autoplay></video>
+                <video autoplay width="1920" height="1080"></video>
             </div>
         </div>
     </div>
@@ -69,6 +69,8 @@
     async function monitor() {
         takePicture();
         const response = await facePresent();
-        const response2 = await monitor();
+        setTimeout(function() {
+            const response2 = monitor();
+        }, 3000);
     }
 </script>
