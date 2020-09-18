@@ -6,7 +6,7 @@
 
 <body>
 <h2>Face Enrollment Form</h2>
-<g:uploadForm name="enrollmentUpload" action="enroll">
+<g:uploadForm name="enrollmentUpload" action="enrollFromLoadedImage">
     <input type="file" name="faceImage"/><br>
     <g:select name="personId" from="${Person.list()}" noSelection="['':'Select an Identity']" optionValue="fullName" optionKey="id"/><br>
     <g:submitButton name="Submit"/>

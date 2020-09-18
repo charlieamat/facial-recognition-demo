@@ -1,9 +1,10 @@
 import Luxand.FSDK
 import com.force5solutions.demo.*
+import org.codehaus.groovy.grails.io.support.ResourceLoader
 
 class BootStrap {
 
-    static String license = "AigFBWMDQcjyOOoVmuwrByOoZF5CZ7rHROzL372Le7Pwi50U+VpkFcHDp3t/VEAnVqalc9mYqK/k/5CzlqvxBR8vnuUDfBdNExTOal7kmS3MWfXrL+7qedbMqpz4qTcKooxKwmdFSB6Xa5tWp4613SNOt47BmYvSfLH6IIoxLMU="
+    static String license = "F3pXg0l9T9uc33EtbkrnzuFktKpcb9fwDdJlQeP+tkK9ofZ7oCmI6vL0Q2BOQMSDNzlWYvVaBqPyY1ZzoEvAcVYVGIyP47GBBe2xcJt63VyHysiZULQ8xAp7KfolGQolISsm/VdXMubw7hDWZiQ9Ui9ntZoiJFOecfPOhjWPHSI="
 
     def init = { servletContext ->
         new Person(firstName: 'Charles', lastName: 'Amat').save()
@@ -13,6 +14,9 @@ class BootStrap {
 
         log.debug("Activating FSDK library.")
 
+        //def facesdkLibrary = ResourceLoader.getResource("lib/facesdk.dll").getFile()
+        //println(facesdkLibrary)
+        System.load("C:\\Program Files (x86)\\Luxand\\FaceSDK 7.1.0\\bin\\win64\\facesdk.dll")
         if (FSDK.ActivateLibrary(license) == FSDK.FSDKE_OK) {
             log.debug("Successfully activated the FSDK library.")
 

@@ -5,24 +5,13 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile
 
 class MatchingController {
 
-    static String license = "AigFBWMDQcjyOOoVmuwrByOoZF5CZ7rHROzL372Le7Pwi50U+VpkFcHDp3t/VEAnVqalc9mYqK/k/5CzlqvxBR8vnuUDfBdNExTOal7kmS3MWfXrL+7qedbMqpz4qTcKooxKwmdFSB6Xa5tWp4613SNOt47BmYvSfLH6IIoxLMU="
+    static String license = "F3pXg0l9T9uc33EtbkrnzuFktKpcb9fwDdJlQeP+tkK9ofZ7oCmI6vL0Q2BOQMSDNzlWYvVaBqPyY1ZzoEvAcVYVGIyP47GBBe2xcJt63VyHysiZULQ8xAp7KfolGQolISsm/VdXMubw7hDWZiQ9Ui9ntZoiJFOecfPOhjWPHSI="
 
     def index() {
         [person: null]
     }
 
     def findIdentity() {
-        if (FSDK.ActivateLibrary(license) == FSDK.FSDKE_OK) {
-            log.debug("Successfully activated the FSDK library.")
-
-            if (FSDK.Initialize() == FSDK.FSDKE_OK) {
-                log.debug("Successfully initialized the FSDK library.")
-            } else {
-                log.warn("There was an error initializing the FSDK library.")
-            }
-        } else {
-            log.warn("There was an error activating the FSDK library.")
-        }
         def faceImage = params.faceImage as CommonsMultipartFile
         if (faceImage == null) {
             log.error("The facial enrollment form was submitted without a file.")
@@ -36,7 +25,7 @@ class MatchingController {
         def loadStatus = FSDK.LoadImageFromJpegBuffer(hImage, faceImage.bytes, faceImage.bytes.size())
 
         if (loadStatus != FSDK.FSDKE_OK) {
-            log.warn("There was an error loading an image from the JPEG buffer.")
+            log.error("There was an error loading an image from the JPEG buffer.")
             render view: 'index', model: [statusMessage: "There was an error loading an image from the JPEG buffer."]
             return
         }
@@ -67,7 +56,7 @@ class MatchingController {
 
             def matchStatus = FSDK.MatchFaces(faceTemplate, faceTemplate2, similarity)
             if (matchStatus != FSDK.FSDKE_OK) {
-                log.debug("An error occurred while matching templates.")
+                log.error("An error occurred while matching templates.")
                 return false
             }
 
