@@ -5,7 +5,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile
 
 class MatchingController {
 
-    static String license = "F3pXg0l9T9uc33EtbkrnzuFktKpcb9fwDdJlQeP+tkK9ofZ7oCmI6vL0Q2BOQMSDNzlWYvVaBqPyY1ZzoEvAcVYVGIyP47GBBe2xcJt63VyHysiZULQ8xAp7KfolGQolISsm/VdXMubw7hDWZiQ9Ui9ntZoiJFOecfPOhjWPHSI="
+    static String license = "RCGsrGMPo9+uzNiNbWSa53486Bi9Kdnkn7i9+WyXcv+CbJche4iKq3ZM1qAReKzy2inJA2RclGHRdWFUZCaQzEwgUDjPtFynkbNdw1wce0YJdCc4hst+9Y0FoylVjWIPJFHBhEF7kEJrpo2AWzhrDFJLHuuAsNYoSlkDK/EPBdc="
 
     def index() {
         [person: null]

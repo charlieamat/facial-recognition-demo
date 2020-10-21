@@ -4,7 +4,7 @@ import org.codehaus.groovy.grails.io.support.ResourceLoader
 
 class BootStrap {
 
-    static String license = "F3pXg0l9T9uc33EtbkrnzuFktKpcb9fwDdJlQeP+tkK9ofZ7oCmI6vL0Q2BOQMSDNzlWYvVaBqPyY1ZzoEvAcVYVGIyP47GBBe2xcJt63VyHysiZULQ8xAp7KfolGQolISsm/VdXMubw7hDWZiQ9Ui9ntZoiJFOecfPOhjWPHSI="
+    static String license = "RCGsrGMPo9+uzNiNbWSa53486Bi9Kdnkn7i9+WyXcv+CbJche4iKq3ZM1qAReKzy2inJA2RclGHRdWFUZCaQzEwgUDjPtFynkbNdw1wce0YJdCc4hst+9Y0FoylVjWIPJFHBhEF7kEJrpo2AWzhrDFJLHuuAsNYoSlkDK/EPBdc="
 
     def init = { servletContext ->
         new Person(firstName: 'Charles', lastName: 'Amat').save()
@@ -14,9 +14,10 @@ class BootStrap {
 
         log.debug("Activating FSDK library.")
 
-        //def facesdkLibrary = ResourceLoader.getResource("lib/facesdk.dll").getFile()
+        def facesdkLibrary = ResourceLoader.getResource("lib/facesdk.dll").getFile()
+        ResourceLoader.getResource("lib/facesdk.dll").path
         //println(facesdkLibrary)
-        System.load("C:\\Program Files (x86)\\Luxand\\FaceSDK 7.1.0\\bin\\win64\\facesdk.dll")
+        System.load("C:\\Program Files (x86)\\Luxand\\FaceSDK 7.2.0\\bin\\win64\\facesdk.dll")
         if (FSDK.ActivateLibrary(license) == FSDK.FSDKE_OK) {
             log.debug("Successfully activated the FSDK library.")
 

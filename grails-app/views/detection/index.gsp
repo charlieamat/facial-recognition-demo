@@ -1,8 +1,7 @@
 <%@ page import="com.force5solutions.demo.Person" contentType="text/html;charset=UTF-8" %>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://github.com/justadudewhohacks/face-api.js/raw/master/dist/face-api.js"></script>
 
-<canvas id="identityImage" style="width: 1920px; height: 1080px;" />
+<canvas id="identityImage" style="width: 500px; height: 500px;" />
 
 <g:form name="enrollForm" action="save" params="${params}" method="post">
     <div class="row">
@@ -43,13 +42,13 @@
         });
     }
 
-    const MODEL_URL = "https://raw.githubusercontent.com/justadudewhohacks/face-api.js/master/weights"
+    const MODEL_URL = "${resource(dir: 'models')}"
 
 
     $( document ).ready(async function() {
-        await faceapi.loadSsdMobilenetv1Model(MODEL_URL);
-        await faceapi.loadFaceLandmarkModel(MODEL_URL);
-        await faceapi.loadFaceRecognitionModel(MODEL_URL);
+        await faceapi.nets.ssdMobilenetv1.loadFromUri(MODEL_URL);
+        await faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL);
+        await faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL);
         await monitor();
     });
 
@@ -71,6 +70,6 @@
         const response = await facePresent();
         setTimeout(function() {
             const response2 = monitor();
-        }, 3000);
+        }, 500);
     }
 </script>
